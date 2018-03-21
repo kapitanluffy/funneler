@@ -3,9 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\QueueManager\QueuedItemInterface;
+use App\QueueManager\QueuedFeedItemInterface;
 
-class QueuedFeedItem extends Model implements QueuedItemInterface
+class QueuedFeedItem extends Model implements QueuedFeedItemInterface
 {
     protected $table = 'queue';
 

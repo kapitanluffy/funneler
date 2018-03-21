@@ -17,4 +17,4 @@ Route::get('/', function () {
 
 Route::get('/feed', 'FeedController@index');
 
-Route::get('/queue', 'QueueController@index');
+Route::post('/queue', 'FeedController@queue');
