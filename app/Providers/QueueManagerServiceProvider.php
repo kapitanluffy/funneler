@@ -24,8 +24,10 @@ class QueueManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('App\QueueManager\QueuedFeedItemInterface', 'App\QueuedFeedItem');
+
         $this->app->bind('App\QueueManager\QueueManagerInterface', function ($app) {
-            return new EloquentQueueManager($app['App\QueuedItem']);
+            return new EloquentQueueManager($app['App\QueueManager\QueuedFeedItemInterface']);
         });
     }
 }

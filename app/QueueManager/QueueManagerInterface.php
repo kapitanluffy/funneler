@@ -2,9 +2,16 @@
 
 namespace App\QueueManager;
 
-use App\QueueManager\QueuedItemInterface;
+use App\FeedManager\FeedItemInterface;
 
 interface QueueManagerInterface
 {
-    public function queue(QueuedItemInterface $item);
+    /**
+     * Queues the given feed item
+     *
+     * @param  FeedItemInterface $item
+     *
+     * @return QueuedFeedItemInterface
+     */
+    public function queue(FeedItemInterface $item);
 }
