@@ -2,11 +2,14 @@
 
 namespace App\FeedManager;
 
+use App\FeedManager\Feed;
+use App\FeedManager\FeedFactoryInterface;
+
 class FeedManager implements FeedManagerInterface
 {
-    public function __construct()
+    public function __construct(FeedFactoryInterface $factory)
     {
-
+        $this->feedFactory = $factory;
     }
 
     /**
@@ -18,6 +21,7 @@ class FeedManager implements FeedManagerInterface
      */
     public function load($url)
     {
-        return simplexml_load_file($url);
+        $xml = simplexml_load_file($url);
+        return $this->feedFactory->createFeed($xml);
     }
 }

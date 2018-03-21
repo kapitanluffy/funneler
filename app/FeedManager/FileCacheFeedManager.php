@@ -3,12 +3,15 @@
 namespace App\FeedManager;
 
 use App\FeedManager\FeedManagerInterface;
+use App\FeedManager\FeedInterface;
+use App\FeedManager\FeedFactoryInterface;
 
 class FileCacheFeedManager implements FeedManagerInterface
 {
-    public function __construct(FeedManagerInterface $manager, $cacheDirectory)
+    public function __construct(FeedManagerInterface $manager, FeedFactoryInterface $factory, $cacheDirectory)
     {
         $this->manager = $manager;
+        $this->factory = $factory;
         $this->cacheDirectory = $cacheDirectory;
     }
 
@@ -24,7 +27,8 @@ class FileCacheFeedManager implements FeedManagerInterface
         $cacheKey = $this->generateCacheKey($url);
 
         if ($data = $this->getCachedFeed($cacheKey)) {
-            return new \SimpleXMLElement($data['xml']);
+            $xml = new \SimpleXMLElement($data['xml']);
+            return $this->factory->createFeed($xml);
         }
 
         $feed = $this->manager->load($url);
@@ -38,7 +42,7 @@ class FileCacheFeedManager implements FeedManagerInterface
         return hash('sha1', $value);
     }
 
-    protected function cacheFeed($cacheKey, \SimpleXMLElement $feed)
+    protected function cacheFeed($cacheKey, FeedInterface $feed)
     {
         $file = "{$this->cacheDirectory}/{$cacheKey}.feed";
         $handler = fopen($file, "w");
@@ -48,7 +52,7 @@ class FileCacheFeedManager implements FeedManagerInterface
         }
 
         $expiry = strtotime("+24 hours", time());
-        $data = ["expiry" => $expiry, "xml" => $feed->asXml() ];
+        $data = ["expiry" => $expiry, "xml" => $feed->getXml()->asXml() ];
         $data = json_encode($data);
 
         $bytes = fwrite($handler, $data);

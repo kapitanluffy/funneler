@@ -24,8 +24,10 @@ class FeedManagerServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind('App\FeedManager\FeedFactoryInterface', 'App\FeedManager\BaseFeedFactory');
+
         $this->app->bind('App\FeedManager\FeedManagerInterface', function ($app) {
-            return new FileCacheFeedManager($app['App\FeedManager\FeedManager'], storage_path('framework/cache'));
+            return new FileCacheFeedManager($app['App\FeedManager\FeedManager'], $app['App\FeedManager\FeedFactoryInterface'], storage_path('framework/cache'));
         });
     }
 }
