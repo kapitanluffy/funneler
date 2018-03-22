@@ -26,6 +26,13 @@ interface FeedItemInterface
     public function getLink();
 
     /**
+     * Get timestamp
+     *
+     * @return int
+     */
+    public function getTimestamp();
+
+    /**
      * Get xml
      *
      * @return \SimpleXmlElement

@@ -28,6 +28,11 @@ class RssFeedItem implements \JsonSerializable, FeedItemInterface
         return $this->xml->link->__toString();
     }
 
+    public function getTimestamp()
+    {
+        return strtotime($this->xml->pubDate);
+    }
+
     public function getXml()
     {
         return $this->xml;
@@ -38,7 +43,8 @@ class RssFeedItem implements \JsonSerializable, FeedItemInterface
         return [
             'title' => $this->getTitle(),
             'content' => $this->getContent(),
-            'link' => $this->getLink()
+            'link' => $this->getLink(),
+            'timestamp' => $this->getTimestamp()
         ];
     }
 

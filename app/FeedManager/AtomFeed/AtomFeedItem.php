@@ -28,6 +28,11 @@ class AtomFeedItem implements \JsonSerializable, FeedItemInterface
         return $this->xml->link['href']->__toString();
     }
 
+    public function getTimestamp()
+    {
+        return strtotime($this->xml->updated);
+    }
+
     public function getXml()
     {
         return $this->xml;
@@ -38,7 +43,8 @@ class AtomFeedItem implements \JsonSerializable, FeedItemInterface
         return [
             'title' => $this->getTitle(),
             'content' => $this->getContent(),
-            'link' => $this->getLink()
+            'link' => $this->getLink(),
+            'timestamp' => $this->getTimestamp()
         ];
     }
 
