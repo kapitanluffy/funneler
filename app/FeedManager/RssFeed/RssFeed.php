@@ -10,6 +10,7 @@ class RssFeed extends AbstractFeed
     public function __construct(\SimpleXMLElement $xml)
     {
         $this->xml = $xml;
+        $this->url = $xml->channel->link;
         $this->items = $this->generateFeedItems($this->xml->channel->item);
     }
 

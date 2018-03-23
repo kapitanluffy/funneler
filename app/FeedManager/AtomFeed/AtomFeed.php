@@ -10,6 +10,7 @@ class AtomFeed extends AbstractFeed
     public function __construct(\SimpleXMLElement $xml)
     {
         $this->xml = $xml;
+        $this->url = $xml->link[0]['href']->__toString();
         $this->items = $this->generateFeedItems($this->xml->entry);
     }
 
