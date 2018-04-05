@@ -12,6 +12,13 @@ interface FeedInterface
     public function items();
 
     /**
+     * Get feed url
+     *
+     * @return string
+     */
+    public function getUrl();
+
+    /**
      * Get xml
      *
      * @return \SimpleXmlElement
